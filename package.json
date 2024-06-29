@@ -2,7 +2,7 @@
   "name": "simple-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rupendrapamisetty.github.io/Simple-app",
+  "homepage": "https://github.com/rupendrapamisetty/Simple-app.git",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
