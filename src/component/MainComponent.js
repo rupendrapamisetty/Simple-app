@@ -13,15 +13,16 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-
-const Homepage = () => {
+const MainComponent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const posts = useSelector((state) => state.posts.posts);
     const users = useSelector((state) => state.posts.users);
+
+    console.log("posts",posts);
   
-    const [searchQuery, setSearchQuery] = useState("");
-    const [sortConfig, setSortConfig] = useState({ key: "username", direction: "asc" });
+    const [search, setSearch] = useState("");
+    const[sorted,setSorted] = useState({key:"username",direction:"asc"});
   
     useEffect(() => {
       dispatch(fetchPosts());
@@ -47,61 +48,59 @@ const Homepage = () => {
       content: post.body,
       id: post.id,
     }));
+
+    const filteredPosts = enrichedPosts.filter((post)=>
+        post?.username?.user?.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const sortedPosts = filteredPosts.sort((a,b)=>{
+        const aVal = a[sorted.key].user.toLowerCase();
+        const bVal = b[sorted.key].user.toLowerCase();
+
+        if(aVal < bVal){
+            return setSorted.direction==="asc"?1:-1;
+        }
+        if(aVal > bVal){
+            return setSorted.direction==="asc"?-1:1;
+        }
+    });
+
+    const finalPosts=sortedPosts.map((post,index)=>({
+        ...post,
+        slNo:index+1
+    }));
+
+    console.log("finalPosts---->",finalPosts);
   
-    const handleButton = (id) => {
+    const handlebutton = (id) => {
       console.log("post id->>", id);
       navigate("/post-details", { state: id });
     };
-  
-    // Filter posts based on search query
-    const filteredPosts = enrichedPosts.filter((post) =>
-      post.username.user.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  
-    // Sort posts based on sortConfig
-    const sortedPosts = filteredPosts.sort((a, b) => {
-      const aValue = a[sortConfig.key].user.toLowerCase();
-      const bValue = b[sortConfig.key].user.toLowerCase();
-      if (aValue < bValue) {
-        return sortConfig.direction === "asc" ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
-      return 0;
-    });
-  
-    const handleSort = (key) => {
-      let direction = "asc";
-      if (sortConfig.key === key && sortConfig.direction === "asc") {
-        direction = "desc";
-      }
-      setSortConfig({ key, direction });
-    };
+
+    const handleSortClick=(key)=>{
+        let direction = "asc";
+        if(sorted.key===key && sorted.direction==="asc"){
+            direction = "desc";
+        }
+        setSorted({key:key,direction:direction});
+    }
   
     return (
       <div>
-        <TextField
-          label="Search by Username"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <TextField value={search} fullWidth placeholder="Search by Username" onChange={(e)=>setSearch(e.target.value)}/>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>SlNo</TableCell>
               <TableCell>
-                <TableSortLabel
-                  active={sortConfig.key === "username"}
-                  direction={sortConfig.direction}
-                  onClick={() => handleSort("username")}
+                <TableSortLabel 
+                    active={sorted.key==="username"}
+                    direction={sorted.direction}
+                    onClick={(e)=>handleSortClick("username")}
                 >
-                  UserName
+                    UserName
                 </TableSortLabel>
-              </TableCell>
+            </TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Content</TableCell>
@@ -109,18 +108,18 @@ const Homepage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedPosts.map((post) => (
+            {finalPosts.map((post) => (
               <TableRow key={post.id}>
                 <TableCell>{post.slNo}</TableCell>
-                <TableCell>{post.username.user}</TableCell>
-                <TableCell>{post.name.name}</TableCell>
+                <TableCell>{post.username?.user}</TableCell>
+                <TableCell>{post.name?.name}</TableCell>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>{post.content}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => handleButton(post.id)}
+                    onClick={() => handlebutton(post.id)}
                   >
                     View Details
                   </Button>
@@ -132,5 +131,5 @@ const Homepage = () => {
       </div>
     );
   };
-  
-export default Homepage
+
+export default MainComponent
