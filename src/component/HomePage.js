@@ -49,7 +49,7 @@ const Homepage = () => {
     }));
   
     const handleButton = (id) => {
-      console.log("post id->>", id);
+      // console.log("post id->>", id);
       navigate("/post-details", { state: id });
     };
   

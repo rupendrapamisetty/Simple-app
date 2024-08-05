@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 // import "./index.css";
 import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { store } from "./store";
 import { Provider } from "react-redux";
 
@@ -12,9 +12,9 @@ root.render(
   <Provider store={store}>
     {/* <PersistGate loading={null} persistor={persister}> */}
     {/* <ConfigProvider> */}
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
     {/* </ConfigProvider> */}
     {/* </PersistGate> */}
   </Provider>

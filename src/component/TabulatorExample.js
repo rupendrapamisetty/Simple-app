@@ -81,8 +81,8 @@ const TabulatorExample = () => {
     const ref = useRef(null);
 
     const rowClick = (e, row) => {
-        console.log('ref table: ', ref.current); // this is the Tabulator table instance
-        console.log(`rowClick id: ${row.getData().id}`, row, e);
+        // console.log('ref table: ', ref.current); // this is the Tabulator table instance
+        // console.log(`rowClick id: ${row.getData().id}`, row, e);
         setState({ selectedName: row.getData().name });
     };
 
@@ -113,21 +113,21 @@ const TabulatorExample = () => {
             },
             paginationSize: 5,
             ajaxResponse: (url, params, response) => {
-                console.log('url, params, response', url, params, response);
+                // console.log('url, params, response', url, params, response);
                 return { data: response.data, last: response.total_pages };
             },
             ajaxError: (error) => {
-                console.log('ajaxError', error);
+                // console.log('ajaxError', error);
             }
         };
 
         return <ReactTabulator onRef={r => ref.current = r} columns={columns} options={options} events={{
             dataLoaded: data => {
-                console.log('dataLoaded', data);
+                // console.log('dataLoaded', data);
                 return { data, last: 5 };
             },
             ajaxError: error => {
-                console.log('ajaxError', error);
+                // console.log('ajaxError', error);
             }
         }} />;
     };

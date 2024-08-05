@@ -17,18 +17,21 @@ import {
 const PostContent = () => {
   let location = useLocation();
   let dispatch = useDispatch();
-  console.log("location", location);
+  // console.log("location", location);
 
   let userDetails = useSelector((state) => state.posts.users);
   let postdetails = useSelector((state) => state.posts.comments);
 
   useEffect(() => {
     dispatch(fetchUsers());
-    dispatch(fetchCommentsByPostId(location.state));
+    dispatch(fetchCommentsByPostId(location.state?.id));
   }, [dispatch]);
 
-  console.log("userDetails", userDetails[location.state]);
-  console.log("postDetails", postdetails);
+  // console.log("userDetails", userDetails);
+  // console.log("postDetails", postdetails);
+
+  const userDetail = userDetails?.find(item=>item.id===location.state?.userId);
+
 
   return (
     <div style={{ padding: "20px" }}>
@@ -40,25 +43,25 @@ const PostContent = () => {
         <Grid item xs={3} md={6} lg={3}>
           <Stack spacing={1}>
             <InputLabel>USerName</InputLabel>
-            <TextField disabled value={userDetails[location.state]?.username} />
+            <TextField disabled value={userDetail?.username} />
           </Stack>
         </Grid>
         <Grid item xs={3} md={6} lg={3}>
           <Stack spacing={1}>
             <InputLabel>Name</InputLabel>
-            <TextField disabled value={userDetails[location.state]?.name} />
+            <TextField disabled value={userDetail?.name} />
           </Stack>
         </Grid>
         <Grid item xs={3} md={6} lg={3}>
           <Stack spacing={1}>
             <InputLabel>Email</InputLabel>
-            <TextField disabled value={userDetails[location.state]?.email} />
+            <TextField disabled value={userDetail?.email} />
           </Stack>
         </Grid>
         <Grid item xs={3} md={6} lg={3}>
           <Stack spacing={1}>
             <InputLabel>Phone</InputLabel>
-            <TextField disabled value={userDetails[location.state]?.phone} />
+            <TextField disabled value={userDetail?.phone} />
           </Stack>
         </Grid>
         <Grid item xs={3} md={6} lg={3}>
@@ -66,7 +69,7 @@ const PostContent = () => {
             <InputLabel>Company</InputLabel>
             <TextField
               disabled
-              value={userDetails[location.state]?.company["name"]}
+              value={userDetail?.company["name"]}
             />
           </Stack>
         </Grid>
@@ -86,7 +89,7 @@ const PostContent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {postdetails[location.state]?.map((post) => (
+            {postdetails[location.state?.id]?.map((post) => (
               <TableRow key={post.id}>
                 <TableCell>{post.id}</TableCell>
                 <TableCell>{post.name}</TableCell>

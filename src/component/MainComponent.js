@@ -19,7 +19,8 @@ const MainComponent = () => {
     const posts = useSelector((state) => state.posts.posts);
     const users = useSelector((state) => state.posts.users);
 
-    console.log("posts",posts);
+    // console.log("posts",posts);
+    // console.log("users",users);
   
     const [search, setSearch] = useState("");
     const[sorted,setSorted] = useState({key:"username",direction:"asc"});
@@ -47,6 +48,7 @@ const MainComponent = () => {
       title: post.title,
       content: post.body,
       id: post.id,
+      userId:post.userId
     }));
 
     const filteredPosts = enrichedPosts.filter((post)=>
@@ -70,11 +72,11 @@ const MainComponent = () => {
         slNo:index+1
     }));
 
-    console.log("finalPosts---->",finalPosts);
+    // console.log("finalPosts---->",finalPosts);
   
-    const handlebutton = (id) => {
-      console.log("post id->>", id);
-      navigate("/post-details", { state: id });
+    const handlebutton = (post) => {
+      // console.log("post id->>", post);
+      navigate("/post-details", { state: post });
     };
 
     const handleSortClick=(key)=>{
@@ -119,7 +121,7 @@ const MainComponent = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => handlebutton(post.id)}
+                    onClick={() => handlebutton(post)}
                   >
                     View Details
                   </Button>

@@ -202,7 +202,7 @@ const TabulatorComponent = () => {
   const tableRef = useRef(null);
 
   const handleDownload = (format) => {
-    console.log("tableRef", tableRef.current);
+    // console.log("tableRef", tableRef.current);
     if (tableRef.current) {
       const table = tableRef.current;
 
