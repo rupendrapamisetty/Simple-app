@@ -11,6 +11,10 @@ import { useState } from "react";
 import * as d3 from "d3";
 import TabulatorComponent from "../component/TabulatorComponent";
 import TabulatorExample from "../component/TabulatorExample";
+import BreakingBad from "../component/BreakingBad";
+import Donut from "../react-apex/Donut";
+import RunVegaAPi from "../vega-components/VegaApi";
+import ApexChart from "../vega-components/ApexChart";
 
 export default function Routes() {
   const [data, setData] = useState(() => d3.ticks(-2, 2, 200).map(Math.sin));
@@ -58,6 +62,22 @@ function onMouseMove(event) {
     {
       path:"/tabulator-demo",
       element:<TabulatorExample/>
+    },
+    {
+      path:"/breaking-bad",
+      element:<BreakingBad/>
+    },
+    {
+      path:"/apex-donut",
+      element:<Donut/>
+    },
+    {
+      path:"/react-vega-lite-api",
+      element:<RunVegaAPi/>
+    },
+    {
+      path:"/apex-bar-chart",
+      element:<ApexChart/>
     }
   ];
 

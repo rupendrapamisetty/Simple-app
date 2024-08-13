@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { ReactTabulator } from "react-tabulator";
 import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css"; // for Bootstrap theme (optional)
-import { Card, Grid, IconButton } from "@mui/material";
+import { Box, Card, Grid, IconButton, SvgIcon } from "@mui/material";
 
 const TabulatorComponent = () => {
   const data = [
@@ -96,20 +96,21 @@ const TabulatorComponent = () => {
     {
       title: "Index",
       field: "index",
-      width: 100,
+      width: 150,
+      minWidth: 100,
       formatter: (cell) => cell.getRow().getPosition(true),
       frozen: true,
       responsive: 0,
-      minWidth: 50,
     },
     {
       title: "Circle Name",
       field: "circle_name",
       frozen: true,
-      width: 200,
+      width: 100,
       resizable: true,
       responsive: 3,
       minWidth: 150,
+      visible: false, // Hide the column
     },
     {
       title: "Substation Name",
@@ -233,8 +234,13 @@ const TabulatorComponent = () => {
     }
   };
 
+
+  useEffect(()=>{
+
+  })
+
   return (
-    <Card sx={{backgroundColor:"grey"}}>
+    <Grid container spacing={3}> 
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
         <IconButton
           size="small"
@@ -271,26 +277,26 @@ const TabulatorComponent = () => {
           HTML
         </IconButton>
       </Grid>
-      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+      {/* <Grid style={{ width: '90%', margin: 'auto' }}> */}
         <ReactTabulator
-          onRef={(ref) => (tableRef.current = ref)}
+          // onRef={(ref) => (tableRef.current = ref)}
           data={data}
           columns={columns}
-          layout="fitDataFill"
+          layout="fitDataTable"
           options={{
-            rowHeader: true,
-            responsiveLayout: true,
+            // rowHeader: true,
+            // responsiveLayout: true,
             pagination: "local",
             paginationSize: 10,
             paginationSizeSelector: [5, 10, 15, 20],
-            movableRows: true,
-            movableColumns: true,
+            // movableRows: true,
+            // movableColumns: true,
             paginationCounter: "rows",
             groupBy: "circle_name",
           }}
         />
-      </Grid>
-    </Card>
+      {/* </Grid> */}
+    </Grid>
   );
 };
 

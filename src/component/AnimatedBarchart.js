@@ -1,23 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-
-const useResizeObserver = ref =>{
-    const[dimensions,setDimensions]=useState(null);
-    useEffect(()=>{
-        const observeTarget = ref.current;
-        const resizeObserver = new ResizeObserver((entries)=>{
-           entries.forEach((entry)=>{
-            setDimensions(entry.contentRect);
-           })
-        });
-        resizeObserver.observe(observeTarget);
-        return ()=>{
-            resizeObserver.unobserve(observeTarget);
-        };
-
-    },[ref]);
-    return dimensions;
-}
+import { useResizeObserver } from "../util";
 
 const AnimatedBarchart = () => {
     const [data, setData] = useState([25, 30, 45, 60, 20, 70, 30]);
@@ -28,12 +11,12 @@ const AnimatedBarchart = () => {
 
     useEffect(() => {
         const svg = d3.select(ref.current);
-        console.log("dimensions",dimensions);
+        // console.log("dimensions",dimensions);
 
         if(!dimensions) return;
 
         const xScale = d3.scaleBand()
-            .domain(data.map((value, index) => index))
+            .domain(data.map((_, index) => index))
             .range([0, dimensions.width])
             .padding(0.5);
 
@@ -48,12 +31,12 @@ const AnimatedBarchart = () => {
 
         const xAxis = d3.axisBottom(xScale).ticks(data.length);
         svg.select(".x-axis")
-            .style("transform", `translateY(${dimensions.height}px)`)
+            .attr("transform", `translateY(${dimensions.height}px)`)
             .call(xAxis);
 
         const yAxis = d3.axisRight(yScale);
         svg.select(".y-axis")
-            .style("transform", `translateX(${dimensions.width}px)`)
+            .attr("transform", `translateX(${dimensions.width}px)`)
             .call(yAxis);
 
         svg.selectAll(".bar")
@@ -61,10 +44,10 @@ const AnimatedBarchart = () => {
             .join('rect')
             .attr("class", "bar")
             .style("transform", "scale(1,-1)")
-            .attr("x", (value, index) => xScale(index))
+            .attr("x", (_, index) => xScale(index))
             .attr("y", -dimensions.height)
             .attr("width", xScale.bandwidth())
-            .on("mouseenter", (event, value) => {
+            .on("mouseenter", (_, value) => {
                 const index = data.indexOf(value);
                 svg.selectAll(".tooltip")
                     .data([value])

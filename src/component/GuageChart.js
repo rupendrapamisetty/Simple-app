@@ -15,8 +15,8 @@ const GaugeChart = () => {
     const loadClassifier = async () => {
       try {
         classifier = await ml5.imageClassifier('./my-model/model.json');
-        console.log('Model Loaded!');
-        console.log("classifier",classifier);
+        // console.log('Model Loaded!');
+        // console.log("classifier",classifier);
         
         navigator.mediaDevices
           .getUserMedia({ video: true, audio: false })
@@ -26,7 +26,7 @@ const GaugeChart = () => {
           })
           .catch(err => console.error('Error accessing webcam:', err));
       } catch (error) {
-        console.error('Error loading model:', error);
+        // console.error('Error loading model:', error);
       }
     };
 
@@ -37,10 +37,10 @@ const GaugeChart = () => {
     if (classifier && shouldClassify && videoRef.current) {
       classifier.classify(videoRef.current, (error, results) => {
         if (error) {
-          console.error('Error during classification:', error);
+          // console.error('Error during classification:', error);
           return;
         }
-        console.log('Classification results:', results);
+        // console.log('Classification results:', results);
         results.sort((a, b) => b.label.localeCompare(a.label));
         setGaugeData(results.map(entry => entry.confidence));
       });
