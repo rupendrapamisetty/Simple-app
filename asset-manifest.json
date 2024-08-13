@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/Simple-app/static/css/main.c8a32dfb.css",
-    "main.js": "/Simple-app/static/js/main.b252af62.js",
+    "main.css": "/Simple-app/static/css/main.13d56c25.css",
+    "main.js": "/Simple-app/static/js/main.e2909e2d.js",
+    "static/media/WhatsApp Image 2024-08-12 at 17.44.04.jpeg": "/Simple-app/static/media/WhatsApp Image 2024-08-12 at 17.44.04.e5e8dae54bf82c94f525.jpeg",
     "index.html": "/Simple-app/index.html",
-    "main.c8a32dfb.css.map": "/Simple-app/static/css/main.c8a32dfb.css.map",
-    "main.b252af62.js.map": "/Simple-app/static/js/main.b252af62.js.map"
+    "main.13d56c25.css.map": "/Simple-app/static/css/main.13d56c25.css.map",
+    "main.e2909e2d.js.map": "/Simple-app/static/js/main.e2909e2d.js.map"
   },
   "entrypoints": [
-    "static/css/main.c8a32dfb.css",
-    "static/js/main.b252af62.js"
+    "static/css/main.13d56c25.css",
+    "static/js/main.e2909e2d.js"
   ]
 }
